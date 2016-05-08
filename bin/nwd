@@ -4,8 +4,6 @@
 
 const commander = require('commander');
 
-const ProgressBar = require('progress');
-
 const NWD = require('../');
 
 commander.version(require('../package.json').version);
@@ -75,29 +73,7 @@ commander.command('download')
         platform: command.platform,
         arch: command.arch,
         flavor: command.flavor,
-        progressCallback: (progress) => {
-
-            if(!progressbar) {
-
-                progressbar = new ProgressBar(':Name [:bar] :Speed :ETA', {
-                    width: 20,
-                    // Will be overwritten in progressCallback.
-                    total: progress.size.total
-                });
-
-                console.log();
-
-            }
-
-            progressbar.curr = progress.size.transferred;
-
-            progressbar.tick({
-                Name: progress.file.name,
-                Speed: (progress.speed / 1000).toFixed(2) + 'KB/s',
-                ETA: progress.time.remaining ? progress.time.remaining.toFixed(2) + 's' : '-'
-            });
-
-        }
+        showProgressbar: true
     }, (err, fromCache, path) => {
 
         if(err) {

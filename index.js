@@ -8,6 +8,8 @@ const { mkdirsSync } = require('fs-extra');
 const request = require('request');
 const wrapProgress = require('request-progress');
 
+const ProgressBar = require('progress');
+
 const Flow = require('node-flow');
 
 const { GetManifest } = require('./lib/util');
@@ -139,6 +141,7 @@ const DownloadBinary = ({
     platform = null,
     arch = null,
     flavor = 'normal',
+    showProgressbar = false,
     progressCallback = null
 }, callback) => {
 
@@ -179,15 +182,44 @@ const DownloadBinary = ({
 
         debug('url:', url);
 
+        var progressbar = null;
+
         var [err, res, body] = yield wrapProgress(request(url, {
             encoding: null
         }, (err, res, body) => cb(err, res, body)))
-        .on('progress', (progress) => progressCallback ? progressCallback(Object.assign({}, progress, {
-            file: {
-                path: path,
-                name: basename(path)
+        .on('progress', (progress) => {
+
+            if(showProgressbar) {
+
+                if(!progressbar) {
+
+                    progressbar = new ProgressBar(':Name [:bar] :Speed :ETA', {
+                        width: 20,
+                        // Will be overwritten in progressCallback.
+                        total: progress.size.total
+                    });
+
+                    console.log();
+
+                }
+
+                progressbar.curr = progress.size.transferred;
+
+                progressbar.tick({
+                    Name: basename(path),
+                    Speed: (progress.speed / 1000).toFixed(2) + 'KB/s',
+                    ETA: progress.time.remaining ? progress.time.remaining.toFixed(2) + 's' : '-'
+                });
+
             }
-        })) : null);
+
+            if(progressCallback) {
+
+                progressCallback(progress);
+
+            }
+
+        });
 
         if(err) {
             return callback(err);
