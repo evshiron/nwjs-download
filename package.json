@@ -1,0 +1,30 @@
+{
+  "name": "nwjs-download",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "nwd": "./bin/nwd"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/evshiron/nwjs-download.git"
+  },
+  "author": "evshiron",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/evshiron/nwjs-download/issues"
+  },
+  "homepage": "https://github.com/evshiron/nwjs-download#readme",
+  "dependencies": {
+    "commander": "^2.9.0",
+    "debug": "^2.2.0",
+    "fs-extra": "^0.30.0",
+    "node-flow": "github:evshiron/node-flow",
+    "request": "^2.72.0",
+    "request-progress": "^2.0.1"
+  }
+}
