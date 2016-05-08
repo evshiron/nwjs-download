@@ -152,6 +152,30 @@ const GetStableVersion = (callback) => {
 
 };
 
+const GetVersion = (version, callback) => {
+
+    GetManifest((err, manifest) => {
+
+        if(err) {
+            return callback(err);
+        }
+
+        for(let v of manifest.versions) {
+
+            if(v.version == version) {
+
+                return callback(null, v);
+
+            }
+
+        }
+
+        return callback('ERROR_VERSION_NOT_FOUND');
+
+    });
+
+};
+
 const DownloadBinary = ({
     version = null,
     platform = null,
@@ -273,5 +297,6 @@ module.exports = {
     GetVersionList,
     GetLatestVersion,
     GetStableVersion,
+    GetVersion,
     DownloadBinary
 };
