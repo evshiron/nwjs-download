@@ -12,7 +12,7 @@ const ProgressBar = require('progress');
 
 const Flow = require('node-flow');
 
-const { GetManifest } = require('./lib/util');
+const { GetManifest, ClearManifestCache } = require('./lib/util');
 
 const DIR_CACHES = join(dirname(module.filename), 'caches');
 mkdirsSync(DIR_CACHES);
@@ -266,6 +266,8 @@ module.exports = {
     GetPlatform,
     GetArch,
     GetTarget,
+    GetManifest,
+    ClearManifestCache,
     GetVersionList,
     GetLatestVersion,
     GetStableVersion,
