@@ -26,7 +26,7 @@ const EXTENSIONS = {
     'osx-x64': '.zip'
 };
 
-const GetTarget = (platform, arch) => {
+const GetPlatform = (platform) => {
 
     switch(platform) {
     case 'win':
@@ -46,7 +46,14 @@ const GetTarget = (platform, arch) => {
         console.warn('WARN_NO_PLATFORM_SPECIFIED');
         console.warn(`Use ${ process.platform }.`);
         platform = process.platform;
+        break;
     }
+
+    return platform;
+
+};
+
+const GetArch = (arch) => {
 
     switch(arch) {
     case 'x86':
@@ -62,6 +69,15 @@ const GetTarget = (platform, arch) => {
         arch = process.arch;
         break;
     }
+
+    return arch;
+
+};
+
+const GetTarget = (platform, arch) => {
+
+    platform = GetPlatform(platform);
+    arch = GetArch(arch);
 
     switch(platform) {
     case 'win32':
@@ -247,6 +263,8 @@ const DownloadBinary = ({
 };
 
 module.exports = {
+    GetPlatform,
+    GetArch,
     GetTarget,
     GetVersionList,
     GetLatestVersion,
