@@ -201,6 +201,9 @@ const DownloadBinary = ({
 
                     console.log();
 
+                    // Render the progressbar the next time.
+                    return;
+
                 }
 
                 progressbar.curr = progress.size.transferred;
