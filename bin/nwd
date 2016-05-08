@@ -21,7 +21,16 @@ commander.command('list')
             return;
         }
 
-        console.dir(versions);
+        //console.dir(versions);
+
+        for(let version of versions) {
+
+            console.log();
+            console.log('version:', version.version);
+            console.log.apply(null, ['    targets:', ...version.files]);
+            console.log.apply(null, ['    flavors:', ...version.flavors]);
+
+        }
 
     });
 
