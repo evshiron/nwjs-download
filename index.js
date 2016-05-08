@@ -194,6 +194,10 @@ const DownloadBinary = ({
             return callback(err);
         }
 
+        if(res.statusCode != 200) {
+            return callback('ERROR_STATUS_NOT_OK');
+        }
+
         var err = yield writeFile(path, body, {
             encoding: null
         }, cb);
