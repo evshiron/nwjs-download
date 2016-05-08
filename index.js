@@ -156,7 +156,7 @@ const DownloadBinary = ({
     version = null,
     platform = null,
     arch = null,
-    flavor = 'normal',
+    flavor = null,
     showProgressbar = false,
     progressCallback = null
 }, callback) => {
@@ -183,6 +183,8 @@ const DownloadBinary = ({
         }
 
         const target = GetTarget(platform, arch);
+
+        flavor = flavor ? flavor : 'normal';
 
         const identity = version + '-' + flavor + '-' + target + EXTENSIONS[target];
 
