@@ -168,7 +168,7 @@ const DownloadBinary = ({
 
         const target = GetTarget(platform, arch);
 
-        const identity = version + '-' + target + '-' + flavor + EXTENSIONS[target];
+        const identity = version + '-' + flavor + '-' + target + EXTENSIONS[target];
 
         debug('identity:', identity);
 
