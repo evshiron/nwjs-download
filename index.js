@@ -247,6 +247,7 @@ const DownloadBinary = ({
 };
 
 module.exports = {
+    GetTarget,
     GetVersionList,
     GetLatestVersion,
     GetStableVersion,
