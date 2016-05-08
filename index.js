@@ -148,19 +148,18 @@ const DownloadBinary = ({
 
         if(!version) {
 
-            var [err, version] = yield GetStableVersion((err, version) => {
-
-                if(err) {
-                    return cb(err, null);
-                }
-
-                cb(null, version.version);
-
-            });
+            let [err, v] = yield GetStableVersion((err, version) => cb(err, version));
 
             if(err) {
                 return callback(err);
             }
+
+            version = v.version;
+
+        }
+        else if(version.charAt(0) != 'v') {
+
+            version = 'v' + version;
 
         }
 

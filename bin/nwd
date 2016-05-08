@@ -71,7 +71,7 @@ commander.command('download')
     var progressbar = null;
 
     NWD.DownloadBinary({
-        version: command.version,
+        version: typeof command.version == 'string' ? command.version : null,
         platform: command.platform,
         arch: command.arch,
         flavor: command.flavor,
