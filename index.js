@@ -1,6 +1,7 @@
 
 'use strict';
 
+const { homedir } = require('os');
 const { dirname, basename, join } = require('path');
 const { exists, writeFile } = require('fs');
 const { mkdirsSync } = require('fs-extra');
@@ -14,7 +15,7 @@ const Flow = require('node-flow');
 
 const { GetManifest, ClearManifestCache } = require('./lib/util');
 
-const DIR_CACHES = join(dirname(module.filename), 'caches');
+const DIR_CACHES = join(homedir(), '.nwjs-download', 'caches');
 mkdirsSync(DIR_CACHES);
 
 const EXTENSIONS = {
