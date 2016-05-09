@@ -289,15 +289,17 @@ const DownloadBinary = ({
 
 };
 
-module.exports = {
+Object.assign(module.exports, {
+    util: require('./lib/util'),
+    commands: require('./lib/commands'),
     GetPlatform,
     GetArch,
     GetTarget,
-    GetManifest,
-    ClearManifestCache,
     GetVersionList,
     GetLatestVersion,
     GetStableVersion,
     GetVersion,
-    DownloadBinary
-};
+    DownloadBinary,
+    // Deprecated.
+    GetManifest, ClearManifestCache
+});
