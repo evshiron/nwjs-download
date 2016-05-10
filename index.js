@@ -4,6 +4,8 @@
 const { homedir } = require('os');
 const { dirname, basename, join } = require('path');
 const { exists, writeFile } = require('fs');
+const { deprecate } = require('util');
+
 const { mkdirsSync } = require('fs-extra');
 
 const request = require('request');
@@ -301,5 +303,5 @@ Object.assign(module.exports, {
     GetVersion,
     DownloadBinary,
     // Deprecated.
-    GetManifest, ClearManifestCache
+    GetManifest: deprecate(GetManifest, 'GetManifest is deprecated, use util.GetManifest instead.')
 });
