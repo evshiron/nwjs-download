@@ -20,6 +20,9 @@ commander.command('latest')
 commander.command('stable')
 .action(NWD.commands.stable);
 
+commander.command('caches')
+.action(NWD.commands.caches);
+
 commander.command('download')
 .option('-v,--version <version>')
 .option('-p,--platform <platform>')

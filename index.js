@@ -3,7 +3,7 @@
 
 const { homedir } = require('os');
 const { dirname, basename, join } = require('path');
-const { exists, writeFile } = require('fs');
+const { exists, writeFile, readdir } = require('fs');
 const { deprecate } = require('util');
 
 const { mkdirsSync } = require('fs-extra');
@@ -179,6 +179,10 @@ const GetVersion = (version, callback) => {
 
 };
 
+const GetCachedBinaryList = (callback) => {
+    readdir(DIR_CACHES, callback);
+};
+
 const DownloadBinary = ({
     version = null,
     platform = null,
@@ -301,6 +305,7 @@ Object.assign(module.exports, {
     GetLatestVersion,
     GetStableVersion,
     GetVersion,
+    GetCachedBinaryList,
     DownloadBinary,
     // Deprecated.
     GetManifest: deprecate(GetManifest, 'GetManifest is deprecated, use util.GetManifest instead.')
