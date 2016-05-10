@@ -192,7 +192,7 @@ const DownloadBinary = ({
 
         if(!version) {
 
-            let [err, v] = yield GetStableVersion((err, version) => cb(err, version));
+            let [err, v] = yield GetStableVersion(cb.expect(2));
 
             if(err) {
                 return callback(err);
@@ -217,7 +217,7 @@ const DownloadBinary = ({
 
         const path = join(DIR_CACHES, identity);
 
-        if(yield exists(path, cb)) {
+        if(yield exists(path, cb.single)) {
             return callback(null, true, path);
         }
 
@@ -229,7 +229,7 @@ const DownloadBinary = ({
 
         var [err, res, body] = yield wrapProgress(request(url, {
             encoding: null
-        }, (err, res, body) => cb(err, res, body)))
+        }, cb.expect(3)))
         .on('progress', (progress) => {
 
             if(showProgressbar) {
@@ -277,7 +277,7 @@ const DownloadBinary = ({
 
         var err = yield writeFile(path, body, {
             encoding: null
-        }, cb);
+        }, cb.single);
 
         if(err) {
             return callback(err);
