@@ -22,6 +22,9 @@ $ nwd latest
 # Show stable version.
 $ nwd stable
 
+# Show caches.
+$ nwd caches
+
 # Download specified version to cache.
 $ nwd download -v v0.14.4 -p darwin -a x64 -f normal
 ```
