@@ -295,6 +295,66 @@ const DownloadBinary = ({
 
 };
 
+const DownloadFFmpeg = ({
+    version = null,
+    platform = null,
+    arch = null
+}, callback) => {
+
+    Flow(function*(cb) {
+
+        if(!version) {
+
+            let [err, v] = version = yield GetStableVersion(cb.expect(2));
+
+            if(err) {
+                return callback(err);
+            }
+
+            version = v.version;
+
+        }
+
+        version = version.replace(/^v/, '');
+        platform = GetPlatform(platform);
+        arch = GetArch(arch);
+
+        const url = `https://github.com/iteufel/nwjs-ffmpeg-prebuilt/releases/download/${ version }/${ version }-${ platform }-${ arch }.zip`;
+
+        const identity = 'ffmpeg-' + basename(url);
+
+        const path = join(DIR_CACHES, identity);
+
+        if(yield exists(path, cb.single)) {
+
+            return callback(null, true, path);
+
+        }
+
+        var [err, res, body] = yield request(url, {
+            encoding: null
+        }, cb.expect(3));
+
+        if(err) {
+            return callback(err);
+        }
+
+        var err = yield writeFile(path, body, {
+            encoding: null
+        }, cb.single);
+
+        if(err) {
+            return callback(err);
+        }
+
+        callback(null, false, path);
+
+    });
+
+};
+
+
+
 Object.assign(module.exports, {
     util: require('./lib/util'),
     commands: require('./lib/commands'),
@@ -307,6 +367,7 @@ Object.assign(module.exports, {
     GetVersion,
     GetCachedBinaryList,
     DownloadBinary,
+    DownloadFFmpeg,
     // Deprecated.
     GetManifest: deprecate(GetManifest, 'GetManifest is deprecated, use util.GetManifest instead.')
 });
