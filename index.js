@@ -1,24 +1,13 @@
 
 'use strict';
 
-const { homedir } = require('os');
 const { dirname, basename, join } = require('path');
 const { exists, writeFile, readdir } = require('fs');
 const { deprecate } = require('util');
 
-const { mkdirsSync } = require('fs-extra');
-
-const request = require('request');
-const wrapProgress = require('request-progress');
-
-const ProgressBar = require('progress');
-
 const Flow = require('node-flow');
 
-const { GetManifest, ClearManifestCache } = require('./lib/util');
-
-const DIR_CACHES = join(homedir(), '.nwjs-download', 'caches');
-mkdirsSync(DIR_CACHES);
+const { GetManifest, ClearManifestCache, Download } = require('./lib/util');
 
 const EXTENSIONS = {
     'win-ia32': '.zip',
@@ -217,79 +206,17 @@ const DownloadBinary = ({
 
         flavor = flavor ? flavor : 'normal';
 
-        const identity = version + '-' + flavor + '-' + target + EXTENSIONS[target];
-
-        debug('identity:', identity);
-
-        const path = join(DIR_CACHES, identity);
-
-        if(yield exists(path, cb.single)) {
-            return callback(null, true, path);
-        }
-
         const url = `http://dl.nwjs.io/${ version }/nwjs${ flavor == 'normal' ? '' : '-' + flavor}-${ version }-${ target }${ EXTENSIONS[target] }`;
 
         debug('url:', url);
 
-        var progressbar = null;
+        var [err, fromCache, path] = yield Download(url, {
+            cachePrefix: 'binary',
+            showProgressbar: true,
+            progressCallback: progressCallback
+        }, cb.expect(3));
 
-        var [err, res, body] = yield wrapProgress(request(url, {
-            encoding: null
-        }, cb.expect(3)))
-        .on('progress', (progress) => {
-
-            if(showProgressbar) {
-
-                if(!progressbar) {
-
-                    progressbar = new ProgressBar(':Name [:bar] :Speed :ETA', {
-                        width: 20,
-                        // Will be overwritten in progressCallback.
-                        total: progress.size.total
-                    });
-
-                    console.log();
-
-                    // Render the progressbar the next time.
-                    return;
-
-                }
-
-                progressbar.curr = progress.size.transferred;
-
-                progressbar.tick({
-                    Name: basename(path),
-                    Speed: (progress.speed / 1000).toFixed(2) + 'KB/s',
-                    ETA: progress.time.remaining ? progress.time.remaining.toFixed(2) + 's' : '-'
-                });
-
-            }
-
-            if(progressCallback) {
-
-                progressCallback(progress);
-
-            }
-
-        });
-
-        if(err) {
-            return callback(err);
-        }
-
-        if(res.statusCode != 200) {
-            return callback('ERROR_STATUS_NOT_OK');
-        }
-
-        var err = yield writeFile(path, body, {
-            encoding: null
-        }, cb.single);
-
-        if(err) {
-            return callback(err);
-        }
-
-        callback(null, false, path);
+        callback(err, fromCache, path);
 
     });
 
@@ -298,8 +225,12 @@ const DownloadBinary = ({
 const DownloadFFmpeg = ({
     version = null,
     platform = null,
-    arch = null
+    arch = null,
+    showProgressbar = false,
+    progressCallback = null
 }, callback) => {
+
+    const debug = require('debug')('NWD:DownloadFFmpeg');
 
     Flow(function*(cb) {
 
@@ -316,44 +247,36 @@ const DownloadFFmpeg = ({
         }
 
         version = version.replace(/^v/, '');
-        platform = GetPlatform(platform);
+
+        switch(GetPlatform(platform)) {
+        case 'win32':
+            platform = 'win';
+            break;
+        case 'linux':
+            platform = 'linux';
+            break;
+        case 'darwin':
+            platform = 'osx';
+            break;
+        }
+
         arch = GetArch(arch);
 
         const url = `https://github.com/iteufel/nwjs-ffmpeg-prebuilt/releases/download/${ version }/${ version }-${ platform }-${ arch }.zip`;
 
-        const identity = 'ffmpeg-' + basename(url);
+        debug('url:', url);
 
-        const path = join(DIR_CACHES, identity);
-
-        if(yield exists(path, cb.single)) {
-
-            return callback(null, true, path);
-
-        }
-
-        var [err, res, body] = yield request(url, {
-            encoding: null
+        var [err, fromCache, path] = yield Download(url, {
+            cachePrefix: 'ffmpeg',
+            showProgressbar: true,
+            progressCallback: progressCallback
         }, cb.expect(3));
 
-        if(err) {
-            return callback(err);
-        }
-
-        var err = yield writeFile(path, body, {
-            encoding: null
-        }, cb.single);
-
-        if(err) {
-            return callback(err);
-        }
-
-        callback(null, false, path);
+        callback(err, fromCache, path);
 
     });
 
 };
-
-
 
 Object.assign(module.exports, {
     util: require('./lib/util'),

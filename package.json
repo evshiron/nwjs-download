@@ -26,6 +26,7 @@
     "node-flow": "github:evshiron/node-flow",
     "progress": "^1.1.8",
     "request": "^2.72.0",
-    "request-progress": "^2.0.1"
+    "request-progress": "^2.0.1",
+    "temp": "^0.8.3"
   }
 }
