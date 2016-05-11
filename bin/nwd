@@ -1,37 +1,24 @@
-#!/usr/bin/env node --harmony-destructuring --harmony-rest-parameters
+#!/usr/bin/env node
 
-'use strict';
+const path = require('path');
+const child_process = require('child_process');
 
-const commander = require('commander');
+const params = ['--harmony-destructuring', '--harmony-rest-parameters'];
+params.push(path.join(path.dirname(module.filename), 'nwd.js'));
+Array.prototype.push.apply(params, process.argv.slice(2));
 
-const NWD = require('../');
+//console.log('params:', params);
 
-commander.version(require('../package.json').version);
+const cp = child_process.spawn('node', params, {
+    stdio: 'inherit'
+});
 
-commander.command('*')
-.action(() => commander.help());
-
-commander.command('list')
-.action(NWD.commands.list);
-
-commander.command('latest')
-.action(NWD.commands.latest);
-
-commander.command('stable')
-.action(NWD.commands.stable);
-
-commander.command('caches')
-.action(NWD.commands.caches);
-
-commander.command('download')
-.option('-v,--version <version>')
-.option('-p,--platform <platform>')
-.option('-a,--arch <arch>')
-.option('-f,--flavor <flavor>')
-.action(NWD.commands.download);
-
-if(process.argv.length <= 2) {
-    commander.help();
+if(!cp) {
+    console.error('ERROR_SPAWN_FAILED');
+    process.exit(-1);
 }
 
-commander.parse(process.argv);
+cp.on('close', function() {
+    console.log();
+    console.log('Farewell!');
+});
