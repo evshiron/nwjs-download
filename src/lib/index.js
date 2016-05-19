@@ -1,13 +1,15 @@
 
 'use strict';
 
+require('babel-polyfill');
+
 const { dirname, basename, join } = require('path');
 const { exists, writeFile } = require('fs');
 const { deprecate } = require('util');
 
 const Flow = require('node-flow');
 
-const { GetManifest, ClearManifestCache, Download } = require('./lib/util');
+const { GetManifest, ClearManifestCache, Download } = require('./util');
 
 const EXTENSIONS = {
     'win-ia32': '.zip',
@@ -275,8 +277,8 @@ const DownloadFFmpeg = ({
 };
 
 Object.assign(module.exports, {
-    util: require('./lib/util'),
-    commands: require('./lib/commands'),
+    util: require('./util'),
+    commands: require('./commands'),
     GetPlatform,
     GetArch,
     GetTarget,
