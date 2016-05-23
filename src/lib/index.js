@@ -175,6 +175,7 @@ const DownloadBinary = ({
     platform = null,
     arch = null,
     flavor = null,
+    mirror = 'http://dl.nwjs.io',
     showProgressbar = false,
     progressCallback = null
 }, callback) => {
@@ -204,7 +205,7 @@ const DownloadBinary = ({
 
         flavor = flavor ? flavor : 'normal';
 
-        const url = `http://dl.nwjs.io/${ version }/nwjs${ flavor == 'normal' ? '' : '-' + flavor}-${ version }-${ target }${ EXTENSIONS[target] }`;
+        const url = `${ mirror }/${ version }/nwjs${ flavor == 'normal' ? '' : '-' + flavor}-${ version }-${ target }${ EXTENSIONS[target] }`;
 
         debug('url:', url);
 
