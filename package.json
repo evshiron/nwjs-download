@@ -27,7 +27,7 @@
     "commander": "^2.9.0",
     "debug": "^2.2.0",
     "fs-extra": "^0.30.0",
-    "node-flow": "github:evshiron/node-flow",
+    "node-flow": "evshiron/node-flow",
     "progress": "^1.1.8",
     "request": "^2.72.0",
     "request-progress": "^2.0.1",
