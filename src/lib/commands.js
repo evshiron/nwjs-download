@@ -78,13 +78,12 @@ const caches = () => {
 
 const download = (command) => {
 
-    var progressbar = null;
-
     NWD.DownloadBinary({
         version: typeof command.version == 'string' ? command.version : null,
         platform: command.platform,
         arch: command.arch,
         flavor: command.flavor,
+        mirror: command.mirror,
         showProgressbar: true
     }, (err, fromCache, path) => {
 

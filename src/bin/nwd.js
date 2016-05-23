@@ -28,6 +28,7 @@ commander.command('download')
 .option('-p,--platform <platform>')
 .option('-a,--arch <arch>')
 .option('-f,--flavor <flavor>')
+.option('-m,--mirror <mirror_url>')
 .action(NWD.commands.download);
 
 if(process.argv.length <= 2) {
