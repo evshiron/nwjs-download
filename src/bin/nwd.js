@@ -24,11 +24,11 @@ commander.command('caches')
 .action(NWD.commands.caches);
 
 commander.command('download')
-.option('-v,--version <version>')
-.option('-p,--platform <platform>')
-.option('-a,--arch <arch>')
-.option('-f,--flavor <flavor>')
-.option('-m,--mirror <mirror_url>')
+.option('-v,--version <VERSION>')
+.option('-p,--platform <PLATFORM>')
+.option('-a,--arch <ARCH>')
+.option('-f,--flavor <FLAVOR>')
+.option('-m,--mirror <URL_MIRROR>')
 .action(NWD.commands.download);
 
 if(process.argv.length <= 2) {
