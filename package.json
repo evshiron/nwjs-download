@@ -4,8 +4,11 @@
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublish": "npm run build",
+    "pretest": "npm run build",
+    "test": "mocha",
     "build": "babel -d . ./src/",
+    "clean": "rm -r ./bin/ ./lib/ ./test/",
     "prestart": "npm run build",
     "start": "node ./bin/nwd.js"
   },
@@ -35,7 +38,8 @@
   },
   "devDependencies": {
     "babel-cli": "^6.9.0",
-    "babel-preset-es2015": "^6.9.0"
+    "babel-preset-es2015": "^6.9.0",
+    "mocha": "^2.5.1"
   },
   "babel": {
     "presets": [
