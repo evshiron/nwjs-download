@@ -2,17 +2,17 @@
 
 A command line utility for downloading nw.js.
 
-node.js 4.x+ is required.
+node.js 4.1+ is required.
 
 ## Install
 
-```shell
-$ npm install evshiron/nwjs-download -g
+```
+$ npm install nwjs-download -g
 ```
 
 ## Usage
 
-```shell
+```
 # List versions.
 $ nwd list
 
