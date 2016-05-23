@@ -1,6 +1,6 @@
 {
-  "name": "nwjs-download",
-  "version": "1.3.1",
+  "name": "stackmagic-nwjs-download",
+  "version": "1.3.3",
   "description": "",
   "main": "./lib/index.js",
   "scripts": {
@@ -14,20 +14,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/evshiron/nwjs-download.git"
+    "url": "git+https://github.com/stackmagicn/nwjs-download.git"
   },
   "author": "evshiron",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/evshiron/nwjs-download/issues"
+    "url": "https://github.com/stackmagic/nwjs-download/issues"
   },
-  "homepage": "https://github.com/evshiron/nwjs-download#readme",
+  "homepage": "https://github.com/stackmagic/nwjs-download#readme",
   "dependencies": {
     "babel-polyfill": "^6.9.0",
     "commander": "^2.9.0",
     "debug": "^2.2.0",
     "fs-extra": "^0.30.0",
-    "node-flow": "github:evshiron/node-flow",
+    "stackmagic-node-flow": "*",
     "progress": "^1.1.8",
     "request": "^2.72.0",
     "request-progress": "^2.0.1",
