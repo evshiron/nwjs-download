@@ -13,7 +13,7 @@ const wrapProgress = require('request-progress');
 
 const ProgressBar = require('progress');
 
-const Flow = require('node-flow');
+const Flow = require('@evshiron/node-flow');
 
 const DIR_CACHES = join(homedir(), '.nwjs-download', 'caches');
 mkdirsSync(DIR_CACHES);
