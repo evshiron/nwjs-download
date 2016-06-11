@@ -7,7 +7,7 @@ const { dirname, basename, join } = require('path');
 const { exists, writeFile } = require('fs');
 const { deprecate } = require('util');
 
-const Flow = require('@evshiron/node-flow');
+const Flow = require('node-async-flow');
 
 const { GetManifest, ClearManifestCache, Download } = require('./util');
 
