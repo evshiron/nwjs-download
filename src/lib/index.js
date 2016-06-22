@@ -1,8 +1,6 @@
 
 'use strict';
 
-if(!global._babelPolyfill) require('babel-polyfill');
-
 const { dirname, basename, join } = require('path');
 const { exists, writeFile } = require('fs');
 const { deprecate } = require('util');
