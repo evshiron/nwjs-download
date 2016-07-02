@@ -1,10 +1,11 @@
 
 'use strict';
 
-const { homedir } = require('os');
 const { dirname, basename, join, resolve } = require('path');
 const { exists, stat, writeFile, readFile, unlink, readdir } = require('fs');
 const { mkdirsSync } = require('fs-extra');
+
+const homedir = require('os-homedir');
 
 const temp = require('temp').track();
 
