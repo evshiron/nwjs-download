@@ -6,7 +6,7 @@ const { dirname, basename, join, resolve } = require('path');
 const { exists, stat, writeFile, readFile, unlink, readdir } = require('fs');
 const { mkdirsSync } = require('fs-extra');
 
-const temp = require('temp');
+const temp = require('temp').track();
 
 const request = require('request');
 const wrapProgress = require('request-progress');
