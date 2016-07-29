@@ -31,7 +31,7 @@ $ nwd download -v v0.14.4 -p darwin -a x64 -f normal
 
 ## Mirrors
 
-* https://cnpmjs.org/mirrors/nwjs/
+* https://npm.taobao.org/mirrors/nwjs/
 
 ## License
 
